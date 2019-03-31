@@ -18,7 +18,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	answers := quiz.PresentProblems(problems)
+	answers := quiz.PresentProblems(problems, args.timeLimit)
 
 	score := quiz.ComputeScore(problems, answers)
 

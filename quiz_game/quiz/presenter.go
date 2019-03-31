@@ -12,10 +12,11 @@ func PresentWelcomeScreen() {
 	stdio.AwaitConfirmation()
 }
 
-func PresentProblems(problems []Problem) []string {
+func PresentProblems(problems []Problem, timeLimitSeconds int) []string {
 	answers := make([]string, len(problems))
 
-	timer := time.After(10 * time.Second)
+	timeLimit := time.Duration(timeLimitSeconds)
+	timer := time.After(timeLimit * time.Second)
 
 	func() {
 		for index, problem := range problems {
