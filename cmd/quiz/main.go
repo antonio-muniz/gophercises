@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"os"
+
+	"github.com/antonio-muniz/gophercises/cmd/quiz/game"
+)
 
 func main() {
-	fmt.Println("Hello world!")
+	game.Play(os.Stdout, os.Stdin)
 }
