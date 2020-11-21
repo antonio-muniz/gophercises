@@ -2,17 +2,13 @@ package csv
 
 import (
 	"encoding/csv"
-	"os"
+	"io"
 
 	"github.com/pkg/errors"
 )
 
-func Read(filePath string) ([][]string, error) {
-	file, err := os.Open(filePath)
-	if err != nil {
-		return nil, errors.WithStack(err)
-	}
-	csvReader := csv.NewReader(file)
+func Read(reader io.Reader) ([][]string, error) {
+	csvReader := csv.NewReader(reader)
 	rows, err := csvReader.ReadAll()
 	if err != nil {
 		return nil, errors.WithStack(err)

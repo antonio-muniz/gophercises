@@ -1,6 +1,7 @@
 package csv_test
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/antonio-muniz/gophercises/pkg/csv"
@@ -8,7 +9,13 @@ import (
 )
 
 func TestRead(t *testing.T) {
-	rows, err := csv.Read("C:\\Users\\ahnm_\\go\\src\\github.com\\antonio-muniz\\gophercises\\test\\data\\pkg\\csv\\file.csv")
+	reader := strings.NewReader(strings.Join([]string{
+		"name,city_of_birth,date_of_birth",
+		"Toninho,Poá,1994-06-14",
+		"Moarah,Suzano,1995-01-04",
+		"",
+	}, "\n"))
+	rows, err := csv.Read(reader)
 	require.NoError(t, err)
 	require.Equal(t, [][]string{
 		{"name", "city_of_birth", "date_of_birth"},
