@@ -13,9 +13,13 @@ func Play(settings Settings) error {
 	if err != nil {
 		return err
 	}
+	questions, err := ParseQuestions(questionRows)
+	if err != nil {
+		return err
+	}
 	scanner := bufio.NewScanner(settings.PlayerInput)
-	for index, row := range questionRows {
-		fmt.Fprintf(settings.PlayerOutput, "Question #%d: %s Answer: ", index+1, row[0])
+	for _, question := range questions {
+		fmt.Fprintf(settings.PlayerOutput, "Question #%d: %s Answer: ", question.Number, question.Text)
 		if !scanner.Scan() {
 			return errors.WithStack(scanner.Err())
 		}
