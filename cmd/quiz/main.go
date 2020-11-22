@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/antonio-muniz/gophercises/cmd/quiz/game"
+	"github.com/antonio-muniz/gophercises/cmd/quiz/internal/game"
 	"github.com/pkg/errors"
 )
 

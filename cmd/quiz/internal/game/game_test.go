@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/antonio-muniz/gophercises/cmd/quiz/game"
+	"github.com/antonio-muniz/gophercises/cmd/quiz/internal/game"
 	"github.com/stretchr/testify/require"
 )
 
