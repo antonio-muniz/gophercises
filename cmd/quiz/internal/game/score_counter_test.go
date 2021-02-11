@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestCountScore(t *testing.T) {
+func TestComputeScore(t *testing.T) {
 	t.Run("counts correct answers", func(t *testing.T) {
 		questions := []game.Question{
 			{CorrectAnswer: "A"},
@@ -17,7 +17,7 @@ func TestCountScore(t *testing.T) {
 		}
 		answers := []string{"A", "B", "X", "D"}
 
-		score, err := game.CountScore(questions, answers)
+		score, err := game.ComputeScore(questions, answers)
 
 		require.NoError(t, err)
 		require.Equal(t, 3, score)
@@ -32,7 +32,7 @@ func TestCountScore(t *testing.T) {
 		}
 		answers := []string{"A", "B", "C", "D", "E"}
 
-		_, err := game.CountScore(questions, answers)
+		_, err := game.ComputeScore(questions, answers)
 
 		require.EqualError(t, err, "there are more answers than questions")
 	})
@@ -46,7 +46,7 @@ func TestCountScore(t *testing.T) {
 		}
 		answers := []string{"A", "B", "C"}
 
-		_, err := game.CountScore(questions, answers)
+		_, err := game.ComputeScore(questions, answers)
 
 		require.EqualError(t, err, "there are less answers than questions")
 	})

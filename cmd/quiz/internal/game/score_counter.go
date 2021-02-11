@@ -2,7 +2,7 @@ package game
 
 import "errors"
 
-func CountScore(questions []Question, answers []string) (int, error) {
+func ComputeScore(questions []Question, answers []string) (int, error) {
 	if len(answers) > len(questions) {
 		return -1, errors.New("there are more answers than questions")
 	}
