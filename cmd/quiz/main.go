@@ -1,16 +1,21 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/antonio-muniz/gophercises/cmd/quiz/internal/game"
-	"github.com/pkg/errors"
 )
 
 func main() {
-	questionFile, err := os.Open("C:\\Users\\ahnm_\\go\\src\\github.com\\antonio-muniz\\gophercises\\test\\data\\cmd\\quiz\\questions.csv")
+	arguments, err := parseArguments()
 	if err != nil {
-		panic(errors.WithStack(err))
+		os.Exit(1)
+	}
+	questionFile, err := os.Open(arguments.QuestionFilePath)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
 	defer questionFile.Close()
 	settings := game.Settings{
@@ -20,6 +25,7 @@ func main() {
 	}
 	err = game.Play(settings)
 	if err != nil {
-		panic(err)
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
 }
