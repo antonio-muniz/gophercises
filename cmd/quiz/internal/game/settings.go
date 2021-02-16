@@ -1,10 +1,13 @@
 package game
 
-import "io"
+import (
+	"io"
+	"time"
+)
 
 type Settings struct {
-	QuestionReader    io.Reader
-	TimerMilliseconds int
-	PlayerInput       io.Reader
-	PlayerOutput      io.Writer
+	QuestionReader io.Reader
+	TimerDuration  time.Duration
+	PlayerInput    io.Reader
+	PlayerOutput   io.Writer
 }

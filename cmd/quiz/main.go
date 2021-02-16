@@ -20,6 +20,7 @@ func main() {
 	defer questionFile.Close()
 	settings := game.Settings{
 		QuestionReader: questionFile,
+		TimerDuration:  arguments.TimerDuration,
 		PlayerInput:    os.Stdin,
 		PlayerOutput:   os.Stdout,
 	}

@@ -88,7 +88,7 @@ func TestPlay(t *testing.T) {
 				"1 + 2 = ?,3",
 				"",
 			}, "\n")),
-			TimerMilliseconds: 100,
+			TimerDuration: 100 * time.Millisecond,
 			PlayerInput: strings.NewReader(strings.Join([]string{
 				"10",
 				"10",
@@ -124,9 +124,9 @@ func TestPlay(t *testing.T) {
 				"1 + 2 = ?,3",
 				"",
 			}, "\n")),
-			TimerMilliseconds: 100,
-			PlayerInput:       inputReader,
-			PlayerOutput:      output,
+			TimerDuration: 100 * time.Millisecond,
+			PlayerInput:   inputReader,
+			PlayerOutput:  output,
 		}
 		go func() {
 			defer inputWriter.Close()

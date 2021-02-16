@@ -37,7 +37,7 @@ func collectAnswers(questions []Question, settings Settings) ([]string, error) {
 	scanner := bufio.NewScanner(settings.PlayerInput)
 	answers := make([]string, 0, len(questions))
 
-	err := timing.WithTimeout(settings.TimerMilliseconds, func(finish chan error) {
+	err := timing.WithTimeout(settings.TimerDuration, func(finish chan error) {
 		for _, question := range questions {
 			fmt.Fprintf(settings.PlayerOutput, "Question #%d: %s Answer: ", question.Number, question.Text)
 			if !scanner.Scan() {
