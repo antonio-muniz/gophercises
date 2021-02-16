@@ -3,9 +3,9 @@ package game
 import (
 	"bufio"
 	"fmt"
-	"time"
 
 	"github.com/antonio-muniz/gophercises/pkg/csv"
+	"github.com/antonio-muniz/gophercises/pkg/timing"
 	"github.com/pkg/errors"
 )
 
@@ -36,9 +36,8 @@ func loadQuestions(settings Settings) ([]Question, error) {
 func collectAnswers(questions []Question, settings Settings) ([]string, error) {
 	scanner := bufio.NewScanner(settings.PlayerInput)
 	answers := make([]string, 0, len(questions))
-	finish := make(chan error)
 
-	go func() {
+	err := timing.WithTimeout(settings.TimerMilliseconds, func(finish chan error) {
 		for _, question := range questions {
 			fmt.Fprintf(settings.PlayerOutput, "Question #%d: %s Answer: ", question.Number, question.Text)
 			if !scanner.Scan() {
@@ -50,25 +49,18 @@ func collectAnswers(questions []Question, settings Settings) ([]string, error) {
 			fmt.Fprintln(settings.PlayerOutput)
 		}
 		finish <- nil
-	}()
+	})
 
-	if settings.TimerMilliseconds == 0 {
-		err := <-finish
-		if err != nil {
-			return nil, err
-		}
-	} else {
-		select {
-		case err := <-finish:
-			if err != nil {
-				return nil, err
-			}
-		case <-time.After(time.Duration(settings.TimerMilliseconds) * time.Millisecond):
-			fmt.Fprintln(settings.PlayerOutput)
-			fmt.Fprintln(settings.PlayerOutput, "Time is up!")
-		}
+	switch err {
+	case nil:
+		return answers, nil
+	case timing.ErrTimeout:
+		fmt.Fprintln(settings.PlayerOutput)
+		fmt.Fprintln(settings.PlayerOutput, "Time is up!")
+		return answers, nil
+	default:
+		return nil, err
 	}
-	return answers, nil
 }
 
 func displayScore(questions []Question, answers []string, settings Settings) error {
