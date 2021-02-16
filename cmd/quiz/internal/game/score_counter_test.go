@@ -23,7 +23,7 @@ func TestComputeScore(t *testing.T) {
 		require.Equal(t, 3, score)
 	})
 
-	t.Run("fails if there are too many answers", func(t *testing.T) {
+	t.Run("fails if there are more answers than questions", func(t *testing.T) {
 		questions := []game.Question{
 			{CorrectAnswer: "A"},
 			{CorrectAnswer: "B"},
@@ -37,17 +37,17 @@ func TestComputeScore(t *testing.T) {
 		require.EqualError(t, err, "there are more answers than questions")
 	})
 
-	t.Run("fails if there are too few answers", func(t *testing.T) {
+	t.Run("counts in order if there are less answers than questions", func(t *testing.T) {
 		questions := []game.Question{
 			{CorrectAnswer: "A"},
 			{CorrectAnswer: "B"},
 			{CorrectAnswer: "C"},
 			{CorrectAnswer: "D"},
 		}
-		answers := []string{"A", "B", "C"}
+		answers := []string{"A", "X", "C"}
 
-		_, err := game.ComputeScore(questions, answers)
-
-		require.EqualError(t, err, "there are less answers than questions")
+		score, err := game.ComputeScore(questions, answers)
+		require.NoError(t, err)
+		require.Equal(t, 2, score)
 	})
 }

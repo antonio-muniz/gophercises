@@ -6,12 +6,9 @@ func ComputeScore(questions []Question, answers []string) (int, error) {
 	if len(answers) > len(questions) {
 		return -1, errors.New("there are more answers than questions")
 	}
-	if len(answers) < len(questions) {
-		return -1, errors.New("there are less answers than questions")
-	}
 	var score int
-	for index, question := range questions {
-		answer := answers[index]
+	for index, answer := range answers {
+		question := questions[index]
 		if answer == question.CorrectAnswer {
 			score++
 		}

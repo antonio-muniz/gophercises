@@ -3,7 +3,8 @@ package game
 import "io"
 
 type Settings struct {
-	QuestionReader io.Reader
-	PlayerInput    io.Reader
-	PlayerOutput   io.Writer
+	QuestionReader    io.Reader
+	TimerMilliseconds int
+	PlayerInput       io.Reader
+	PlayerOutput      io.Writer
 }
